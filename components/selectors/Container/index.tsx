@@ -59,6 +59,8 @@ const defaultProps = {
   justifyContent: "flex-start",
   padding: ["0", "0", "0", "0"],
   margin: ["0", "0", "0", "0"],
+  marginUnit: "px",
+  paddingUnit: "px",
   shadow: 0,
   width: "100%",
   height: "auto",

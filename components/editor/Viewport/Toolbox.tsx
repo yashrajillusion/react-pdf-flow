@@ -65,9 +65,9 @@ export const Toolbox = () => {
               ref,
               <Element
                 canvas
-                is={Container}
-                height="300px"
-                width="300px"
+                is={Container }
+                height="300"
+                width="300"
               ></Element>
             );
           }}
