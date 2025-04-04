@@ -3,11 +3,11 @@ import ControlPanel from "components/editor/Viewport/Sidebar/ControlPanel";
 import { CSSProperties } from "styled-components";
 
 export type LinkProps = {
+  href: string;
   fontSize: string;
   textAlign: CanvasTextAlign;
   fontWeight: string;
   color: string;
-  shadow: number;
   text: string;
   margin: [string, string, string, string];
   padding: [string, string, string, string];
@@ -34,6 +34,9 @@ export type LinkProps = {
   backgroundImage: string;
   backgroundRepeat: string;
   backgroundSize: string;
+  position: CSSProperties["position"];
+  positionUnit: string;
+  positionOffset: string[];
 };
 
 export const Link = ({
@@ -41,7 +44,6 @@ export const Link = ({
   textAlign,
   fontWeight,
   color,
-  shadow,
   text,
   margin,
   padding,
@@ -68,6 +70,9 @@ export const Link = ({
   customCss = {},
   backgroundRepeat,
   backgroundSize,
+  position,
+  positionOffset = [],
+  positionUnit,
 }: Partial<LinkProps>) => {
   const {
     connectors: { connect },
@@ -80,27 +85,61 @@ export const Link = ({
       style={{
         width: width ? `${width}${widthUnit}` : "auto",
         height: height ? `${height}${heightUnit}` : "auto",
-        margin: `${margin[0]}${marginUnit} ${margin[1]}${marginUnit} ${margin[2]}${marginUnit} ${margin[3]}${marginUnit}`,
-        padding: `${padding[0]}${paddingUnit} ${padding[1]}${paddingUnit} ${padding[2]}${paddingUnit} ${padding[3]}${paddingUnit}`,
+        margin: margin
+          ? `${margin[0] || 0}${marginUnit} ${margin[1] || 0}${marginUnit} ${
+              margin[2] || 0
+            }${marginUnit} ${margin[3] || 0}${marginUnit}`
+          : undefined,
+        padding: padding
+          ? `${padding[0] || 0}${paddingUnit} ${
+              padding[1] || 0
+            }${paddingUnit} ${padding[2] || 0}${paddingUnit} ${
+              padding[3] || 0
+            }${paddingUnit}`
+          : undefined,
         color,
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: backgroundImage
+          ? `url(${backgroundImage})`
+          : undefined,
         backgroundColor,
-        textShadow: `0px 0px 2px rgba(0,0,0,${(shadow || 0) / 100})`,
         fontFamily,
         fontSize,
         fontWeight,
         fontStyle,
-        lineHeight: `${lineHeight}%`,
+        lineHeight: lineHeight ? `${lineHeight}%` : undefined,
         textAlign,
         textTransform,
         letterSpacing,
         wordSpacing,
         textDecoration,
-        border: `${border}px ${borderStyle} ${borderColor}`,
-        borderRadius: `${borderRadius[0]}px ${borderRadius[1]}px ${borderRadius[2]}px ${borderRadius[3]}px`,
+        border: border
+          ? `${border}px ${borderStyle} ${borderColor}`
+          : undefined,
+        borderRadius: borderRadius
+          ? `${borderRadius[0] || 0}px ${borderRadius[1] || 0}px ${
+              borderRadius[2] || 0
+            }px ${borderRadius[3] || 0}px`
+          : undefined,
         opacity,
         backgroundRepeat,
         backgroundSize,
+        position,
+        left:
+          positionOffset && positionOffset[3]
+            ? `${positionOffset[3]}${positionUnit}`
+            : undefined,
+        top:
+          positionOffset && positionOffset[0]
+            ? `${positionOffset[0]}${positionUnit}`
+            : undefined,
+        right:
+          positionOffset && positionOffset[1]
+            ? `${positionOffset[1]}${positionUnit}`
+            : undefined,
+        bottom:
+          positionOffset && positionOffset[2]
+            ? `${positionOffset[2]}${positionUnit}`
+            : undefined,
         ...customCss,
       }}
     >
@@ -120,6 +159,7 @@ Link.craft = {
     paddingUnit: "px",
     heightUnit: "px",
     widthUnit: "px",
+    positionUnit: "px",
     padding: ["0", "0", "0", "0"],
     text: "Text",
     borderRadius: [],

@@ -1,7 +1,7 @@
 import React from "react";
-import { Resizable } from "re-resizable";
 import { useNode } from "@craftjs/core";
 import ControlPanel from "components/editor/Viewport/Sidebar/ControlPanel";
+import { CSSProperties } from "styled-components";
 
 interface ImageProps {
   src?: string;
@@ -9,10 +9,16 @@ interface ImageProps {
   width?: string;
   height?: string;
   objectFit?: "cover" | "contain" | "fill" | "none" | "scale-down";
-  margin: [string, string, string, string];
-  padding: [string, string, string, string];
+  margin: string[];
+  padding: string[];
   marginUnit: string;
   paddingUnit: string;
+  borderRadius: string[];
+  position: CSSProperties["position"];
+  positionUnit: string;
+  positionOffset: string[];
+
+  customCss: Object;
 }
 
 export const ImageComp = ({
@@ -25,6 +31,11 @@ export const ImageComp = ({
   padding,
   marginUnit,
   paddingUnit,
+  borderRadius,
+  position,
+  positionOffset = [],
+  positionUnit,
+  customCss = {},
 }: Partial<ImageProps>) => {
   const {
     connectors: { connect },
@@ -32,23 +43,54 @@ export const ImageComp = ({
     selected: node.events.selected,
   }));
   return (
-    <Resizable>
-      <img
-        ref={(dom) => {
-          connect(dom);
-        }}
-        src={src}
-        alt={alt}
-        style={{
-          width: width ? `${width}px` : "",
-          height: height ? `${height}px` : "",
-          objectFit,
-          margin: `${margin[0]}${marginUnit} ${margin[1]}${marginUnit} ${margin[2]}${marginUnit} ${margin[3]}${marginUnit}`,
-          padding: `${padding[0]}${paddingUnit} ${padding[1]}${paddingUnit} ${padding[2]}${paddingUnit} ${padding[3]}${paddingUnit}`,
-        }}
-        className="w-full h-full"
-      />
-    </Resizable>
+    <img
+      ref={(dom) => {
+        connect(dom);
+      }}
+      src={src}
+      alt={alt}
+      style={{
+        width: width ? `${width}px` : undefined,
+        height: height ? `${height}px` : undefined,
+        objectFit,
+        margin: margin
+          ? `${margin[0] || 0}${marginUnit} ${margin[1] || 0}${marginUnit} ${
+              margin[2] || 0
+            }${marginUnit} ${margin[3] || 0}${marginUnit}`
+          : undefined,
+        padding: padding
+          ? `${padding[0] || 0}${paddingUnit} ${
+              padding[1] || 0
+            }${paddingUnit} ${padding[2] || 0}${paddingUnit} ${
+              padding[3] || 0
+            }${paddingUnit}`
+          : undefined,
+        borderRadius: borderRadius
+          ? `${borderRadius[0] || 0}px ${borderRadius[1] || 0}px ${
+              borderRadius[2] || 0
+            }px ${borderRadius[3] || 0}px`
+          : undefined,
+        position,
+        left:
+          positionOffset && positionOffset[3]
+            ? `${positionOffset[3]}${positionUnit}`
+            : undefined,
+        top:
+          positionOffset && positionOffset[0]
+            ? `${positionOffset[0]}${positionUnit}`
+            : undefined,
+        right:
+          positionOffset && positionOffset[1]
+            ? `${positionOffset[1]}${positionUnit}`
+            : undefined,
+        bottom:
+          positionOffset && positionOffset[2]
+            ? `${positionOffset[2]}${positionUnit}`
+            : undefined,
+        ...customCss,
+      }}
+      className="w-full h-full"
+    />
   );
 };
 
@@ -61,8 +103,10 @@ ImageComp.craft = {
     objectFit: "cover",
     marginUnit: "px",
     paddingUnit: "px",
+    positionUnit: "px",
     padding: ["0", "0", "0", "0"],
     margin: [0, 0, 0, 0],
+    borderRadius: [],
   },
   rules: {
     canDrag: () => true,

@@ -2,6 +2,7 @@ import { useNode, useEditor } from "@craftjs/core";
 import React from "react";
 import ContentEditable from "react-contenteditable";
 import ControlPanel from "components/editor/Viewport/Sidebar/ControlPanel";
+import { CSSProperties } from "styled-components";
 
 export type TextProps = {
   fontSize: string;
@@ -34,6 +35,9 @@ export type TextProps = {
   backgroundImage: string;
   backgroundRepeat: string;
   backgroundSize: string;
+  position: CSSProperties["position"];
+  positionUnit: string;
+  positionOffset: string[];
 };
 
 export const Text = ({
@@ -67,6 +71,9 @@ export const Text = ({
   customCss = {},
   backgroundRepeat,
   backgroundSize,
+  position,
+  positionOffset = [],
+  positionUnit,
 }: Partial<TextProps>) => {
   const {
     connectors: { connect },
@@ -87,26 +94,61 @@ export const Text = ({
       style={{
         width: width ? `${width}${widthUnit}` : "auto",
         height: height ? `${height}${heightUnit}` : "auto",
-        margin: `${margin[0]}${marginUnit} ${margin[1]}${marginUnit} ${margin[2]}${marginUnit} ${margin[3]}${marginUnit}`,
-        padding: `${padding[0]}${paddingUnit} ${padding[1]}${paddingUnit} ${padding[2]}${paddingUnit} ${padding[3]}${paddingUnit}`,
+        margin: margin
+          ? `${margin[0] || 0}${marginUnit} ${margin[1] || 0}${marginUnit} ${
+              margin[2] || 0
+            }${marginUnit} ${margin[3] || 0}${marginUnit}`
+          : undefined,
+        padding: padding
+          ? `${padding[0] || 0}${paddingUnit} ${
+              padding[1] || 0
+            }${paddingUnit} ${padding[2] || 0}${paddingUnit} ${
+              padding[3] || 0
+            }${paddingUnit}`
+          : undefined,
         color,
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: backgroundImage
+          ? `url(${backgroundImage})`
+          : undefined,
         backgroundColor,
         fontFamily,
         fontSize,
         fontWeight,
         fontStyle,
-        lineHeight: `${lineHeight}%`,
+        lineHeight: lineHeight ? `${lineHeight}%` : undefined,
         textAlign,
         textTransform,
         letterSpacing,
         wordSpacing,
         textDecoration,
-        border: `${border}px ${borderStyle} ${borderColor}`,
-        borderRadius: `${borderRadius[0]}px ${borderRadius[1]}px ${borderRadius[2]}px ${borderRadius[3]}px`,
+        border: border
+          ? `${border}px ${borderStyle} ${borderColor}`
+          : undefined,
+        borderRadius: borderRadius
+          ? `${borderRadius[0] || 0}px ${borderRadius[1] || 0}px ${
+              borderRadius[2] || 0
+            }px ${borderRadius[3] || 0}px`
+          : undefined,
         opacity,
         backgroundRepeat,
         backgroundSize,
+        position,
+        left:
+          positionOffset && positionOffset[3]
+            ? `${positionOffset[3]}${positionUnit}`
+            : undefined,
+        top:
+          positionOffset && positionOffset[0]
+            ? `${positionOffset[0]}${positionUnit}`
+            : undefined,
+        right:
+          positionOffset && positionOffset[1]
+            ? `${positionOffset[1]}${positionUnit}`
+            : undefined,
+        bottom:
+          positionOffset && positionOffset[2]
+            ? `${positionOffset[2]}${positionUnit}`
+            : undefined,
         ...customCss,
       }}
     />
@@ -124,6 +166,7 @@ Text.craft = {
     paddingUnit: "px",
     heightUnit: "px",
     widthUnit: "px",
+    positionUnit: "px",
     padding: ["0", "0", "0", "0"],
     shadow: 0,
     text: "Text",

@@ -1,15 +1,17 @@
 import React from "react";
 import { Resizer } from "../Resizer";
 import ControlPanel from "components/editor/Viewport/Sidebar/ControlPanel";
+import { CSSProperties } from "styled-components";
+import { useNode } from "@craftjs/core";
 
 export type ContainerProps = {
   fontSize: string;
-  textAlign: string;
+  textAlign: CSSProperties["textAlign"];
   fontWeight: string;
   fontFamily: string;
   fontStyle: string;
   lineHeight: string;
-  textTransform: string;
+  textTransform: CSSProperties["textTransform"];
   letterSpacing: string;
   wordSpacing: string;
   textDecoration: string;
@@ -24,7 +26,7 @@ export type ContainerProps = {
   backgroundImage: string;
   backgroundRepeat: string;
   backgroundSize: string;
-  flexDirection: string;
+  flexDirection: CSSProperties["flexDirection"];
   alignItems: string;
   justifyContent: string;
   width?: string;
@@ -46,7 +48,7 @@ export type ContainerProps = {
   flexShrink: string;
   flexBasis: string;
   display: string;
-  position: string;
+  position: CSSProperties["position"];
   positionUnit: string;
   positionOffset: string[];
 };
@@ -54,14 +56,14 @@ export type ContainerProps = {
 const defaultProps = {
   backgroundColor: "rgba(0, 0, 0, 0.05)",
   display: "block",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  justifyContent: "flex-start",
   padding: ["0", "0", "0", "0"],
   margin: ["0", "0", "0", "0"],
   marginUnit: "px",
   paddingUnit: "px",
   shadow: 0,
+  heightUnit: "px",
+  widthUnit: "px",
+  positionUnit: "px",
   width: "100%",
   height: "auto",
   positionOffset: ["0", "0", "0", "0"],
@@ -73,6 +75,11 @@ export const Container = (props: Partial<ContainerProps>) => {
     ...defaultProps,
     ...props,
   };
+
+  const {
+    connectors: { connect },
+  } = useNode();
+
   const {
     fontSize,
     textAlign,
@@ -111,17 +118,23 @@ export const Container = (props: Partial<ContainerProps>) => {
     customCss = {},
     backgroundRepeat,
     backgroundSize,
+    position,
+    positionOffset,
+    positionUnit,
   } = props;
+  console.log(padding);
   return (
-    <Resizer
-      propKey={{ width: "width", height: "height" }}
+    <div
+      ref={(dom) => {
+        connect(dom);
+      }}
       style={{
         fontSize,
         textAlign,
         fontWeight,
         fontFamily,
         fontStyle,
-        lineHeight: `${lineHeight}%`,
+        lineHeight: lineHeight ? `${lineHeight}%` : undefined,
         textDecoration,
         wordSpacing,
         letterSpacing,
@@ -133,23 +146,58 @@ export const Container = (props: Partial<ContainerProps>) => {
         flexGrow,
         flexShrink,
         flexBasis,
-        backgroundImage: `url(${backgroundImage})`,
+        backgroundImage: backgroundImage
+          ? `url(${backgroundImage})`
+          : undefined,
         backgroundColor,
         color,
         width: width ? `${width}${widthUnit}` : "auto",
         height: height ? `${height}${heightUnit}` : "auto",
-        margin: `${margin[0]}${marginUnit} ${margin[1]}${marginUnit} ${margin[2]}${marginUnit} ${margin[3]}${marginUnit}`,
-        padding: `${padding[0]}${paddingUnit} ${padding[1]}${paddingUnit} ${padding[2]}${paddingUnit} ${padding[3]}${paddingUnit}`,
-        border: `${border}px ${borderStyle} ${borderColor}`,
-        borderRadius: `${borderRadius[0]}px ${borderRadius[1]}px ${borderRadius[2]}px ${borderRadius[3]}px`,
+        margin: margin
+          ? `${margin[0] || 0}${marginUnit} ${margin[1] || 0}${marginUnit} ${
+              margin[2] || 0
+            }${marginUnit} ${margin[3] || 0}${marginUnit}`
+          : undefined,
+        padding: padding
+          ? `${padding[0] || 0}${paddingUnit} ${
+              padding[1] || 0
+            }${paddingUnit} ${padding[2] || 0}${paddingUnit} ${
+              padding[3] || 0
+            }${paddingUnit}`
+          : undefined,
+        border: border
+          ? `${border}px ${borderStyle} ${borderColor}`
+          : undefined,
+        borderRadius: borderRadius
+          ? `${borderRadius[0] || 0}px ${borderRadius[1] || 0}px ${
+              borderRadius[2] || 0
+            }px ${borderRadius[3] || 0}px`
+          : undefined,
         opacity,
         backgroundRepeat,
         backgroundSize,
+        position,
+        left:
+          positionOffset && positionOffset[3]
+            ? `${positionOffset[3]}${positionUnit}`
+            : undefined,
+        top:
+          positionOffset && positionOffset[0]
+            ? `${positionOffset[0]}${positionUnit}`
+            : undefined,
+        right:
+          positionOffset && positionOffset[1]
+            ? `${positionOffset[1]}${positionUnit}`
+            : undefined,
+        bottom:
+          positionOffset && positionOffset[2]
+            ? `${positionOffset[2]}${positionUnit}`
+            : undefined,
         ...customCss,
       }}
     >
       {children}
-    </Resizer>
+    </div>
   );
 };
 

@@ -199,13 +199,8 @@ const TypographyPanel = () => {
           <div className="space-y-4 p-3 bg-[#1c2428]/30 rounded-lg border border-gray-700/50">
             <InputGroup label="URL">
               <div className="flex gap-2">
-                <Select className="w-24">
-                  <option value="https://">https://</option>
-                  <option value="http://">http://</option>
-                  <option value="tel:">tel:</option>
-                  <option value="mailto:">mailto:</option>
-                </Select>
                 <Input
+                  onChange={(e) => handleNodeUpdate("href", e.target.value)}
                   type="text"
                   className="w-full"
                   placeholder="example.com"
@@ -309,8 +304,6 @@ const StylePanel = () => {
   } = useNode((node) => ({
     node: node.data.props,
   }));
-
-  console.log(node);
 
   const handleNodeUpdate = (key: string, value: any) => {
     setProp((props: any) => {
@@ -893,7 +886,6 @@ export const LayoutPanel = () => {
                   }}
                   type="number"
                   className="absolute top-1 left-1/2 -translate-x-1/2 w-16 text-center z-10"
-                  placeholder="0"
                   title="Top"
                 />
                 <Input
@@ -905,7 +897,6 @@ export const LayoutPanel = () => {
                   }}
                   type="number"
                   className="absolute right-1 top-1/2 -translate-y-1/2 w-16 text-center z-10"
-                  placeholder="0"
                   title="Right"
                 />
                 <Input
@@ -917,7 +908,6 @@ export const LayoutPanel = () => {
                   }}
                   type="number"
                   className="absolute bottom-1 left-1/2 -translate-x-1/2 w-16 text-center z-10"
-                  placeholder="0"
                   title="Bottom"
                 />
                 <Input
@@ -929,7 +919,6 @@ export const LayoutPanel = () => {
                   }}
                   type="number"
                   className="absolute left-1 top-1/2 -translate-y-1/2 w-16 text-center z-10"
-                  placeholder="0"
                   title="Left"
                 />
 
