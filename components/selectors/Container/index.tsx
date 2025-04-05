@@ -25,7 +25,7 @@ export type ContainerProps = {
   backgroundImage: string;
   backgroundRepeat: string;
   backgroundSize: string;
-  flexDirection: CSSProperties["flexDirection"];
+  flexDirection: any;
   alignItems: string;
   justifyContent: string;
   width?: string;
@@ -54,7 +54,8 @@ export type ContainerProps = {
 
 const defaultProps = {
   backgroundColor: "rgba(0, 0, 0, 0.05)",
-  display: "block",
+  display: "flex",
+  flexDirection: "row",
   padding: ["0", "0", "0", "0"],
   margin: ["0", "0", "0", "0"],
   marginUnit: "px",
@@ -65,7 +66,7 @@ const defaultProps = {
   positionUnit: "px",
   width: "100%",
   height: "auto",
-positionOffset: [],
+  positionOffset: [],
   borderRadius: [],
 };
 

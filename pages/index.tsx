@@ -41,6 +41,7 @@ function App() {
                 width="794"
                 height="1122"
                 backgroundColor={"#FFFFFF"}
+                display="flex"
                 custom={{ displayName: "App" }}
               ></Element>
             </Frame>
