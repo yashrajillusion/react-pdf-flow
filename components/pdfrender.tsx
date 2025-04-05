@@ -9,7 +9,7 @@ import {
   PDFViewer,
 } from "@react-pdf/renderer";
 
-const mapPropsToStyle = (props: any) => {
+export const mapPropsToStyle = (props: any) => {
   const style: Record<string, any> = {};
 
   const pxToPt = (px) => (px * 72) / 96;

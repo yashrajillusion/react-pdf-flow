@@ -31,6 +31,7 @@
     "react-dom": "19.0.0",
     "react-loading": "2.0.3",
     "react-rnd": "10.1.1",
+    "react-syntax-highlighter": "^15.6.1",
     "react-youtube": "^7.9.0",
     "styled-components": "6.1.15"
   },

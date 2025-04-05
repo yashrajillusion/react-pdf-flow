@@ -4,7 +4,12 @@ import React from "react";
 import { styled } from "styled-components";
 import RedoSvg from "../../../public/icons/toolbox/redo.svg";
 import UndoSvg from "../../../public/icons/toolbox/undo.svg";
-import { Code2, MinusIcon, PlusIcon } from "lucide-react";
+import {
+  Code2,
+  MinusIcon,
+  Play,
+  PlusIcon,
+} from "lucide-react";
 import Link from "next/link";
 
 const HeaderDiv = styled.div`
@@ -71,6 +76,13 @@ export const Header = ({ setZoomLevel, zoomLevel }) => {
         </div>
         <Link
           href={"/preview"}
+          target="_blank"
+          className="flex gap-2 bg-color800 p-2 rounded-xl cursor-pointer ml-2"
+        >
+          <Play />
+        </Link>
+        <Link
+          href={"/code"}
           target="_blank"
           className="flex gap-2 bg-color800 p-2 rounded-xl cursor-pointer ml-2"
         >
