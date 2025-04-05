@@ -18,7 +18,6 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
       window.localStorage &&
       hasSerializedNodesRun.current
     ) {
-      console.log(query.serialize());
       localStorage.setItem("pdf_flow_state", query.serialize());
     }
 
@@ -35,6 +34,8 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
       const savedState = JSON.parse(localStorage.getItem("pdf_flow_state"));
       if (savedState?.ROOT && !hasSerializedNodesRun.current) {
         actions.deserialize(savedState);
+        hasSerializedNodesRun.current = true;
+      } else if (savedState === null) {
         hasSerializedNodesRun.current = true;
       }
     }
@@ -83,7 +84,7 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
                 transform: `scale(${zoomLevel / 100})`,
                 transformOrigin: "top center",
               }}
-              className="relative flex-col flex items-center"
+              className="relative flex-col flex items-center mt-10"
             >
               {children}
             </div>

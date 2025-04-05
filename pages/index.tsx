@@ -33,15 +33,14 @@ function App() {
           enabled={false}
           onRender={RenderNode}
         >
-          <Viewport>
-            <Frame>
+          <Viewport >
+            <Frame >
               <Element
                 canvas
                 is={Container}
                 width="794"
-                height="1123"
+                height="1122"
                 backgroundColor={"#FFFFFF"}
-                margin={["40", "40", "40", "40"]}
                 custom={{ displayName: "App" }}
               ></Element>
             </Frame>

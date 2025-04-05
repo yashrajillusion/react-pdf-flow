@@ -96,7 +96,7 @@ export const RenderNode = ({ render }) => {
     return () => {
       document
         .querySelector('.craftjs-renderer')
-        .removeEventListener('scroll', scroll);
+        ?.removeEventListener('scroll', scroll);
     };
   }, [scroll]);
 

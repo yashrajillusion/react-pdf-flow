@@ -13,12 +13,17 @@ interface ImageProps {
   padding: string[];
   marginUnit: string;
   paddingUnit: string;
+  borderColor: string;
+  border: string;
+  borderStyle: string;
   borderRadius: string[];
   position: CSSProperties["position"];
   positionUnit: string;
   positionOffset: string[];
-
   customCss: Object;
+  flexGrow: string;
+  flexShrink: string;
+  flexBasis: string;
 }
 
 export const ImageComp = ({
@@ -31,10 +36,16 @@ export const ImageComp = ({
   padding,
   marginUnit,
   paddingUnit,
+  borderColor,
+  border,
+  borderStyle,
   borderRadius,
   position,
   positionOffset = [],
   positionUnit,
+  flexGrow,
+  flexShrink,
+  flexBasis,
   customCss = {},
 }: Partial<ImageProps>) => {
   const {
@@ -50,6 +61,9 @@ export const ImageComp = ({
       src={src}
       alt={alt}
       style={{
+        flexGrow,
+        flexShrink,
+        flexBasis,
         width: width ? `${width}px` : undefined,
         height: height ? `${height}px` : undefined,
         objectFit,
@@ -64,6 +78,9 @@ export const ImageComp = ({
             }${paddingUnit} ${padding[2] || 0}${paddingUnit} ${
               padding[3] || 0
             }${paddingUnit}`
+          : undefined,
+        border: border
+          ? `${border}px ${borderStyle} ${borderColor}`
           : undefined,
         borderRadius: borderRadius
           ? `${borderRadius[0] || 0}px ${borderRadius[1] || 0}px ${
@@ -107,6 +124,7 @@ ImageComp.craft = {
     padding: ["0", "0", "0", "0"],
     margin: [0, 0, 0, 0],
     borderRadius: [],
+    positionOffset: [],
   },
   rules: {
     canDrag: () => true,

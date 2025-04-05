@@ -65,7 +65,7 @@ const defaultProps = {
   positionUnit: "px",
   width: "100%",
   height: "auto",
-  positionOffset: ["0", "0", "0", "0"],
+positionOffset: [],
   borderRadius: [],
 };
 
@@ -127,7 +127,7 @@ export const Container = (props: Partial<ContainerProps>) => {
         connect(dom);
       }}
       style={{
-        fontSize,
+        fontSize: `${fontSize}px`,
         textAlign,
         fontWeight,
         fontFamily,

@@ -103,7 +103,7 @@ export const Link = ({
           : undefined,
         backgroundColor,
         fontFamily,
-        fontSize,
+        fontSize: `${fontSize}px`,
         fontWeight,
         fontStyle,
         lineHeight: lineHeight ? `${lineHeight}%` : undefined,
@@ -163,6 +163,7 @@ Link.craft = {
     padding: ["0", "0", "0", "0"],
     text: "Text",
     borderRadius: [],
+    positionOffset: [],
   },
   rules: {
     canDrag: () => true,
