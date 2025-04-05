@@ -39,3 +39,15 @@ body {
   padding: 10px 0.5rem;
   border-top: 1px solid rgb(0 0 0 / 6%);
 }
+
+.craft-layer-children > div > div {
+  background: #14181b;
+  color: #9ba5b7;
+}
+.craft-layer-node > div > div {
+  background: #14181b;
+  margin-left: 10px;
+}
+.craft-layer-node > div {
+  background: #14181b;
+}

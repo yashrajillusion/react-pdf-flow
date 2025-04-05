@@ -6,7 +6,7 @@
     "dev": "next dev",
     "start": "next start",
     "build": "next build",
-    "clean": "rimraf lib .next out dist"
+    "clean": "rm -rf lib .next out dist"
   },
   "dependencies": {
     "@craftjs/core": "^0.2.12",

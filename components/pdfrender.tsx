@@ -206,7 +206,7 @@ const renderNode = (nodeId: string, data: any) => {
 // 🎉 Main Dynamic PDF component
 const DynamicPDF = ({ data }: { data: any }) => {
   return (
-    <PDFViewer style={{ width: "100%", height: "100vh" }}>
+    <PDFViewer key={Math.random()} style={{ width: "100%", height: "100vh" }}>
       <Document>
         <Page size="A4">{renderNode("ROOT", data)}</Page>
       </Document>

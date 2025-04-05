@@ -6,6 +6,7 @@ import { Text } from "../../selectors/Text";
 import { Image, LinkIcon, Square, TextIcon, Type } from "lucide-react";
 import { ImageComp } from "components/selectors";
 import { Link } from "components/selectors/Link";
+import { Layers } from "@craftjs/layers";
 
 const ToolboxDiv = styled.div<{ $enabled: boolean }>`
   transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
@@ -63,12 +64,7 @@ export const Toolbox = () => {
           ref={(ref) => {
             create(
               ref,
-              <Element
-                canvas
-                is={Container }
-                height="300"
-                width="300"
-              ></Element>
+              <Element canvas is={Container} height="300" width="300"></Element>
             );
           }}
           className="flex flex-col w-20 items-center gap-1 bg-color800 rounded-md px-4 py-2"
@@ -98,7 +94,8 @@ export const Toolbox = () => {
         </div>
       </div>
       <div className="border-t border-[#353c44] mt-6 ">
-        <p className="mt-2 text-white">Layout Tree</p>
+        <p className="mt-2 text-white mb-2">Layout Tree</p>
+        <Layers expandRootOnLoad={true} />
       </div>
     </ToolboxDiv>
   );
