@@ -1,5 +1,4 @@
 import React from "react";
-import { Resizer } from "../Resizer";
 import ControlPanel from "components/editor/Viewport/Sidebar/ControlPanel";
 import { CSSProperties } from "styled-components";
 import { useNode } from "@craftjs/core";
@@ -122,7 +121,6 @@ export const Container = (props: Partial<ContainerProps>) => {
     positionOffset,
     positionUnit,
   } = props;
-  console.log(padding);
   return (
     <div
       ref={(dom) => {

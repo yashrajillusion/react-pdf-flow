@@ -1,6 +1,6 @@
 import { useEditor, useNode } from "@craftjs/core";
 import cx from "classnames";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Header } from "./Header";
 import { Toolbox } from "./Toolbox";
@@ -8,14 +8,19 @@ import { Toolbox } from "./Toolbox";
 export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
-  const {
-    connectors,
-    actions: { setOptions },
-    active,
-    related,
-  } = useEditor((state, query) => {
+  const [zoomLevel, setZoomLevel] = useState<number>(100);
+  const hasSerializedNodesRun = useRef(false);
+  const { connectors, actions, active, related } = useEditor((state, query) => {
     const enabled = state.options.enabled;
     const currentlySelectedNodeId = query.getEvent("selected").first();
+    if (
+      typeof window !== "undefined" &&
+      window.localStorage &&
+      hasSerializedNodesRun.current
+    ) {
+      console.log(query.serialize());
+      localStorage.setItem("pdf_flow_state", query.serialize());
+    }
 
     return {
       enabled,
@@ -25,7 +30,15 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
     };
   });
 
-  const [zoomLevel, setZoomLevel] = useState<number>(100);
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.localStorage) {
+      const savedState = JSON.parse(localStorage.getItem("pdf_flow_state"));
+      if (savedState?.ROOT && !hasSerializedNodesRun.current) {
+        actions.deserialize(savedState);
+        hasSerializedNodesRun.current = true;
+      }
+    }
+  }, [actions]);
 
   useEffect(() => {
     if (!window) {
@@ -42,12 +55,12 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
       );
 
       setTimeout(() => {
-        setOptions((options) => {
+        actions.setOptions((options) => {
           options.enabled = true;
         });
       }, 200);
     });
-  }, [setOptions]);
+  }, [actions.setOptions]);
 
   return (
     <div className="viewport">
