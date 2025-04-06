@@ -1,10 +1,11 @@
-import { useEditor, useNode } from "@craftjs/core";
+import { useEditor } from "@craftjs/core";
 import cx from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 
 import { Header } from "./Header";
 import { Toolbox } from "./Toolbox";
 import PreviewPdfCode from "components/PreviewPdfCode";
+import Link from "next/link";
 
 export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
   children,
@@ -99,6 +100,16 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
         </div>
         {showCode && <PreviewPdfCode />}
         {active && related.toolbar && React.createElement(related.toolbar)}
+        {!active && (
+          <Link
+            href="https://yash-raj.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-8 right-8 bg-[linear-gradient(to_right,#667eea,#764ba2)] text-white py-3 px-6 rounded-md shadow-lg transition duration-300 ease-in-out transform hover:scale-105 font-semibold text-lg hover:bg-[#764ba2]"
+          >
+            Hire Me!
+          </Link>
+        )}
       </div>
     </div>
   );
