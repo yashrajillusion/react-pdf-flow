@@ -1,7 +1,11 @@
 import { mapPropsToStyle } from "./pdfrender";
 
 function styleObjectToString(styleObj) {
-  return `style={${JSON.stringify(styleObj.style, null, 2)}}`;
+  return `style={{${Object.entries(styleObj.style)
+    .map(([key, value]) => {
+      return `${key}: ${`"${value}"`}`;
+    })
+    .join(", ")}}}`;
 }
 
 function generateJSXFromNode(nodeId, nodesMap) {
@@ -51,7 +55,9 @@ export function GenerateFullReactPdfCode() {
 import { Document, Page, Text, View, Image, Link } from '@react-pdf/renderer';
 
 const MyDocument = () => {
+
   const pxToPt = (px) => (px * 72) / 96;
+
   return <Document>
     <Page size="A4">
       ${body}

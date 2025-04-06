@@ -235,7 +235,7 @@ const TypographyPanel = () => {
               <Input
                 value={node.fontSize}
                 onChange={(e) => handleNodeUpdate("fontSize", e.target.value)}
-                type="text"
+                type="number"
                 className="w-full"
               />
             </div>

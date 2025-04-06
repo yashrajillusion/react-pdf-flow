@@ -33,8 +33,8 @@ function App() {
           enabled={false}
           onRender={RenderNode}
         >
-          <Viewport >
-            <Frame >
+          <Viewport>
+            <Frame>
               <Element
                 canvas
                 is={Container}
@@ -42,6 +42,7 @@ function App() {
                 height="1122"
                 backgroundColor={"#FFFFFF"}
                 display="flex"
+                flexDirection="column"
                 custom={{ displayName: "App" }}
               ></Element>
             </Frame>
