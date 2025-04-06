@@ -32,9 +32,7 @@ function generateJSXFromNode(nodeId, nodesMap) {
       </View>`;
 
     case "ImageComp":
-      return `<Image ${styleString} src="${props.src}" alt="${
-        props.alt || ""
-      }" />`;
+      return `<Image ${styleString} src="${props.src}" />`;
 
     case "Link":
       return `<Link ${styleString} src="${props.href || ""}">
