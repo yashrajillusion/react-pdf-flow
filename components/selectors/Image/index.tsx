@@ -112,6 +112,7 @@ export const ImageComp = ({
 };
 
 ImageComp.craft = {
+  displayName: "Image",
   props: {
     src: "https://dummyimage.com/300X200/a6a6a6/000000",
     alt: "Image",
