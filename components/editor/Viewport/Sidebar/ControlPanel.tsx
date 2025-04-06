@@ -207,6 +207,16 @@ const TypographyPanel = () => {
                 />
               </div>
             </InputGroup>
+            <InputGroup label="Text">
+              <div className="flex gap-2">
+                <Input
+                  onChange={(e) => handleNodeUpdate("text", e.target.value)}
+                  type="text"
+                  className="w-full"
+                  placeholder="Text"
+                />
+              </div>
+            </InputGroup>
           </div>
         )}
 
