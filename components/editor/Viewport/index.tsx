@@ -4,10 +4,12 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { Header } from "./Header";
 import { Toolbox } from "./Toolbox";
+import PreviewPdfCode from "components/PreviewPdfCode";
 
 export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
   children,
 }) => {
+  const [showCode, setShowCode] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<number>(100);
   const hasSerializedNodesRun = useRef(false);
   const { connectors, actions, active, related } = useEditor((state, query) => {
@@ -70,7 +72,12 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
       >
         <Toolbox />
         <div className="page-container bg-bgprimary flex flex-1 h-full flex-col">
-          <Header zoomLevel={zoomLevel} setZoomLevel={setZoomLevel} />
+          <Header
+            zoomLevel={zoomLevel}
+            setZoomLevel={setZoomLevel}
+            setShowCode={setShowCode}
+            showCode={showCode}
+          />
           <div
             className={cx([
               "craftjs-renderer bg-color600 flex-1 h-full w-full transition pb-8 overflow-auto",
@@ -90,6 +97,7 @@ export const Viewport: React.FC<{ children?: React.ReactNode }> = ({
             </div>
           </div>
         </div>
+        {showCode && <PreviewPdfCode />}
         {active && related.toolbar && React.createElement(related.toolbar)}
       </div>
     </div>

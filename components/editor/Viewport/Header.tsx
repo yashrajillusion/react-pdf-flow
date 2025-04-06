@@ -1,11 +1,11 @@
 import { useEditor } from "@craftjs/core";
 import { Tooltip } from "@mui/material";
-import React from "react";
 import { styled } from "styled-components";
 import RedoSvg from "../../../public/icons/toolbox/redo.svg";
 import UndoSvg from "../../../public/icons/toolbox/undo.svg";
 import {
   Code2,
+  Edit,
   MinusIcon,
   Play,
   PlusIcon,
@@ -37,7 +37,7 @@ const Item = styled.a<{ disabled?: boolean }>`
   `}
 `;
 
-export const Header = ({ setZoomLevel, zoomLevel }) => {
+export const Header = ({ setZoomLevel, zoomLevel, setShowCode, showCode }) => {
   const { enabled, canUndo, canRedo, actions } = useEditor((state, query) => ({
     enabled: state.options.enabled,
     canUndo: query.history.canUndo(),
@@ -81,13 +81,15 @@ export const Header = ({ setZoomLevel, zoomLevel }) => {
         >
           <Play />
         </Link>
-        <Link
-          href={"/code"}
-          target="_blank"
+        <div
+          onClick={() => {
+            setShowCode((prev) => !prev);
+            actions.selectNode(null);
+          }}
           className="flex gap-2 bg-color800 p-2 rounded-xl cursor-pointer ml-2"
         >
-          <Code2 />
-        </Link>
+          {showCode ? <Edit /> : <Code2 />}
+        </div>
       </div>
     </HeaderDiv>
   );
